@@ -1,5 +1,5 @@
 # kotlin_coffee_app_ui_compose
-Coffee APP UI with Clean Architecture
+Jetpack Compose Coffee APP UI with Clean Architecture
 
 What you learn from this repo :
 * Jetpack Compose UI Design
