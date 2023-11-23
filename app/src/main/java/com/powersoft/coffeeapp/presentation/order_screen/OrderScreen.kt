@@ -77,7 +77,7 @@ fun ContentOrder(coffee: Coffee) {
         text = "Delivery Address",
         fontWeight = FontWeight.SemiBold,
         color = Color.Black,
-        fontSize = 18.sp
+        fontSize = 16.sp
     )
     VSpace()
     Text(
@@ -89,7 +89,7 @@ fun ContentOrder(coffee: Coffee) {
     VSpace(TinyPadding)
     Text(
         text = "Kpg. Sutoyo No. 620, Bilzen, Tanjungbalai.", color = Color.Gray,
-        fontSize = 12.sp
+        fontSize = 14.sp
     )
     VSpace()
     Row {
@@ -105,27 +105,27 @@ fun ContentOrder(coffee: Coffee) {
     VSpace(SemiLargePadding)
     CouponLayout()
     VSpace()
-    Text(text = "Payment Summary", fontWeight = FontWeight.SemiBold, fontSize = 18.sp)
+    Text(text = "Payment Summary", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
     VSpace(height = 8.dp)
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
         Text(text = "Price")
-        Text(text = "$ ${coffee.price}", fontWeight = FontWeight.SemiBold)
+        Text(text = "$ ${coffee.price}", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
     }
     VSpace(SmallPadding)
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Delivery Fee")
+        Text(text = "Delivery Fee", fontSize = 16.sp)
         Row {
-            Text(text = "$ 2.0", textDecoration = TextDecoration.LineThrough)
+            Text(text = "$ 2.0", textDecoration = TextDecoration.LineThrough, fontSize = 16.sp)
             HSpace(SmallPadding)
-            Text(text = "$ 1.0", fontWeight = FontWeight.SemiBold)
+            Text(text = "$ 1.0", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
         }
     }
     VSpace()
     Divider()
     VSpace()
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-        Text(text = "Total Payment")
-        Text(text = "$ ${coffee.price + 1}", fontWeight = FontWeight.SemiBold)
+        Text(text = "Total Payment", fontSize = 16.sp)
+        Text(text = "$ ${coffee.price + 1}", fontWeight = FontWeight.SemiBold, fontSize = 16.sp)
     }
     VSpace()
     Row {
@@ -175,7 +175,7 @@ fun ContentOrder(coffee: Coffee) {
             text = "Order",
             color = Color.White,
             fontWeight = FontWeight.SemiBold,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             modifier = Modifier.padding(TinyPadding)
         )
     }
@@ -345,6 +345,7 @@ fun OrderButton(text: String, isSelected: Boolean, onClick: () -> Unit, modifier
 
     Text(
         text = text,
+        fontSize = 16.sp,
         modifier = modifier
             .fillMaxWidth()
             .background(color = backgroundColor, shape = Shape.medium)

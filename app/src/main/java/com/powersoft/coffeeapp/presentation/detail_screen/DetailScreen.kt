@@ -22,6 +22,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +42,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.powersoft.coffeeapp.R
 import com.powersoft.coffeeapp.domain.model.Coffee
 import com.powersoft.coffeeapp.presentation.destinations.OrderScreenDestination
+import com.powersoft.coffeeapp.presentation.ui.common.Dimens.MediumPadding
+import com.powersoft.coffeeapp.presentation.ui.common.Dimens.NormalPadding
+import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SemiLargePadding
+import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SmallPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Toolbar
+import com.powersoft.coffeeapp.presentation.ui.common.VSpace
 import com.powersoft.coffeeapp.presentation.ui.theme.Orange500
 import com.powersoft.coffeeapp.presentation.ui.theme.Orange800
 import com.powersoft.coffeeapp.presentation.ui.theme.Shape
@@ -52,9 +58,11 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun DetailScreen(coffee: Coffee, navigator: DestinationsNavigator) {
     val systemUiController = rememberSystemUiController()
-    systemUiController.setSystemBarsColor(
-        color = Color.White
-    )
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = Color.White
+        )
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -82,10 +90,10 @@ fun BottomBuyNowBar(modifier: Modifier = Modifier, price: Float, onClick: () -> 
         modifier = modifier
             .shadow(
                 elevation = 2.dp,
-                shape = RoundedCornerShape(topStart = 12.dp, topEnd = 12.dp)
+                shape = RoundedCornerShape(topStart = NormalPadding, topEnd = NormalPadding)
             )
             .background(color = Color.White)
-            .padding(12.dp),
+            .padding(NormalPadding),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
@@ -116,7 +124,7 @@ fun ContentDetail(coffee: Coffee) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(start = 24.dp, end = 24.dp, top = 12.dp)
+            .padding(start = SemiLargePadding, end = SemiLargePadding, top = NormalPadding)
     ) {
         Image(
             painter = painterResource(id = coffee.coffeeImage), contentDescription = null,
@@ -127,18 +135,18 @@ fun ContentDetail(coffee: Coffee) {
             contentScale = ContentScale.Crop
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Spacer(modifier = Modifier.height(NormalPadding))
 
         Text(
             text = coffee.coffeeName,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color.Black
         )
 
         Text(
             text = coffee.extraItem,
-            fontSize = 12.sp,
+            fontSize = 14.sp,
             color = Color.Black.copy(0.5f)
         )
 
@@ -155,7 +163,7 @@ fun ContentDetail(coffee: Coffee) {
                     painter = painterResource(R.drawable.ic_star),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(24.dp)
+                        .size(SemiLargePadding)
                         .padding(end = 4.dp),
                     tint = Orange500
                 )
@@ -177,13 +185,11 @@ fun ContentDetail(coffee: Coffee) {
             }
         }
 
-        Divider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .height(1.dp)
-                .background(Color.Gray.copy(0.2f))
-        )
+        VSpace()
+
+        Divider()
+
+        VSpace()
 
         Description()
         SizeSelector()
@@ -194,10 +200,10 @@ fun ContentDetail(coffee: Coffee) {
 fun Description() {
     Text(
         text = "Description",
+        fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        color = Color.Black
     )
-    Spacer(modifier = Modifier.height(8.dp))
+    VSpace(SmallPadding)
     Text(
         text = "A cappuccino is an approximately 150 ml (5 oz) beverage, with 25 ml of espresso coffee and 85ml of fresh milk the fo..",
         maxLines = 3,
@@ -208,13 +214,14 @@ fun Description() {
 
 @Composable
 fun SizeSelector() {
-    Spacer(modifier = Modifier.height(12.dp))
+    VSpace()
     Text(
         "Size",
+        fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold
     )
 
-    Spacer(modifier = Modifier.height(8.dp))
+    VSpace(SmallPadding)
     val sizeList = arrayOf("S", "M", "L")
     var selectedSize by remember {
         mutableIntStateOf(0)
@@ -223,7 +230,7 @@ fun SizeSelector() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = MediumPadding),
     ) {
         sizeList.forEachIndexed { index, size ->
             val isSelected = (selectedSize == index)
@@ -256,6 +263,7 @@ fun SizeSelector() {
 fun SizeButton(modifier: Modifier, text: String, textColor: Color) {
     Text(
         text,
+        fontSize = 16.sp,
         modifier = modifier,
         color = textColor,
         textAlign = TextAlign.Center

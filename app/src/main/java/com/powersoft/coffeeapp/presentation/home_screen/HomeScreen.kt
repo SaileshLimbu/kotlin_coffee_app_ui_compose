@@ -185,10 +185,10 @@ fun LocationAndProfile() {
     ) {
         Column {
             Text(
-                text = "Location", color = Color.White.copy(0.4f), fontSize = 12.sp
+                text = "Location", color = Color.White.copy(0.4f), fontSize = 14.sp
             )
             Text(
-                text = "Bilzen, Tanjungbalai", color = Color.White, fontSize = 14.sp
+                text = "Bilzen, Tanjungbalai", color = Color.White, fontSize = 16.sp
             )
         }
         Image(
@@ -240,7 +240,7 @@ fun SearchBox() {
                     fontSize = 14.sp
                 ),
                 placeholder = {
-                    Text(text = "Search", fontSize = 12.sp, color = Color.White)
+                    Text(text = "Search", fontSize = 14.sp, color = Color.White)
                 },
                 modifier = Modifier
                     .weight(1f)
@@ -282,17 +282,19 @@ fun Banner() {
         ) {
             Text(
                 text = "Promo",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
                 modifier = Modifier
                     .padding(bottom = NormalPadding)
                     .background(Color.Red, shape = Shape.small)
-                    .padding(horizontal = TinyPadding, vertical = TinyPadding),
+                    .padding(horizontal = SmallPadding, vertical = TinyPadding),
                 color = Color.White,
             )
             Text(
                 text = "Buy one get\none FREE",
                 style = TextStyle(
                     color = Color.White,
-                    fontSize = 30.sp,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold,
                     shadow = Shadow(
                         color = Black200,

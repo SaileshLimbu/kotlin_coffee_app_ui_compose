@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.powersoft.coffeeapp.presentation.ui.common.Dimens.NormalPadding
+import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SmallPadding
 
 @Composable
 fun Toolbar(onBackPressed: () -> Unit, title: String, showIcon: Boolean = false, icon: Int = 0) {
@@ -35,11 +37,11 @@ fun Toolbar(onBackPressed: () -> Unit, title: String, showIcon: Boolean = false,
                     onBackPressed()
                 }
                 .size(45.dp)
-                .padding(8.dp)
+                .padding(SmallPadding)
         )
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleSmall
         )
         if (showIcon) {
             Icon(
@@ -47,7 +49,7 @@ fun Toolbar(onBackPressed: () -> Unit, title: String, showIcon: Boolean = false,
                 contentDescription = null,
                 modifier = Modifier
                     .size(45.dp)
-                    .padding(12.dp)
+                    .padding(NormalPadding)
             )
         } else {
             HSpace(width = 45.dp)
