@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -54,6 +53,9 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.powersoft.coffeeapp.R
 import com.powersoft.coffeeapp.domain.model.Coffee
 import com.powersoft.coffeeapp.presentation.destinations.DetailScreenDestination
+import com.powersoft.coffeeapp.presentation.home_screen.components.BottomNavigation
+import com.powersoft.coffeeapp.presentation.home_screen.components.CategoryList
+import com.powersoft.coffeeapp.presentation.home_screen.components.CoffeeList
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.ExtraLargePadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.LargePadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.MediumPadding
@@ -61,6 +63,7 @@ import com.powersoft.coffeeapp.presentation.ui.common.Dimens.NormalPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SemiLargePadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SmallPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.TinyPadding
+import com.powersoft.coffeeapp.presentation.ui.common.VSpace
 import com.powersoft.coffeeapp.presentation.ui.theme.Black200
 import com.powersoft.coffeeapp.presentation.ui.theme.Black600
 import com.powersoft.coffeeapp.presentation.ui.theme.Orange800
@@ -80,6 +83,18 @@ fun HomeScreen(
             color = Black600
         )
     }
+    val categories = listOf("Cappuccino", "Machiato", "Latta", "Americano")
+
+    var selectedIndex by remember {
+        mutableIntStateOf(0)
+    }
+
+    val items = listOf(
+        Coffee("Cappuccino", "with Chocolate", 4.8f, R.drawable.ic_coffee2, 4.53f),
+        Coffee("Cappuccino", "with OatMilk", 4.9f, R.drawable.ic_coffee4, 3.90f),
+        Coffee("Cappuccino", "with IceCream", 4.5f, R.drawable.ic_coffee1, 4.66f),
+        Coffee("Cappuccino", "with Milk", 4.6f, R.drawable.ic_coffee3, 3.80f),
+    )
 
     Box(
         modifier = Modifier
@@ -103,78 +118,13 @@ fun HomeScreen(
             LocationAndProfile()
             SearchBox()
             Banner()
-            CategoryList()
-            Spacer(modifier = Modifier.height(LargePadding))
-            CoffeeList(navigator)
+            CategoryList(categories, selectedIndex, onClick = { selectedIndex = it })
+            VSpace(LargePadding)
+            CoffeeList(
+                items,
+                onClick = { navigator.navigate(DetailScreenDestination(items[it])) })
         }
         BottomNavigation(modifier = Modifier.align(Alignment.BottomCenter))
-    }
-}
-
-@Composable
-fun BottomNavigation(modifier: Modifier) {
-    val navigationIcons = listOf(
-        R.drawable.ic_home,
-        R.drawable.ic_heart,
-        R.drawable.ic_bag,
-        R.drawable.ic_notification
-    )
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(4),
-        modifier = modifier
-            .shadow(
-                7.dp,
-                shape = RoundedCornerShape(topStart = NormalPadding, topEnd = NormalPadding)
-            )
-            .fillMaxWidth()
-            .height(60.dp)
-            .background(
-                Color.White,
-                RoundedCornerShape(topStart = NormalPadding, topEnd = NormalPadding)
-            ),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        items(count = 4) {
-            Box(
-                modifier = Modifier
-                    .clickable { selectedIndex = it }
-                    .height(60.dp)
-                    .fillMaxWidth()
-            ) {
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        painter = painterResource(navigationIcons[it]), contentDescription = null,
-                        tint = if (selectedIndex == it) Orange800 else Color.Gray,
-                        modifier = Modifier
-                            .size(25.dp)
-                    )
-                    if (selectedIndex == it) {
-                        Box(
-                            modifier = Modifier
-                                .width(12.dp)
-                                .padding(top = TinyPadding)
-                                .clip(Shape.large)
-                                .height(4.dp)
-                                .background(
-                                    brush = Brush.horizontalGradient(
-                                        colors = listOf(
-                                            Orange800.copy(0.5f),
-                                            Orange800
-                                        )
-                                    )
-                                )
-                        )
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -307,132 +257,4 @@ fun Banner() {
     }
 }
 
-@Composable
-fun CategoryList() {
-    val categories = listOf("Cappuccino", "Machiato", "Latta", "Americano")
 
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
-
-    LazyRow(modifier = Modifier.fillMaxWidth()) {
-        items(count = categories.size) {
-            Text(
-                text = categories[it],
-                fontSize = 14.sp,
-                color = if (selectedIndex == it) Color.White else Color.Black,
-                modifier = Modifier
-                    .padding(end = TinyPadding)
-                    .clip(Shape.medium)
-                    .clickable {
-                        selectedIndex = it
-                    }
-                    .background(
-                        color = if (selectedIndex == it) Orange800 else Color.White,
-                        shape = Shape.medium
-                    )
-                    .padding(horizontal = MediumPadding, vertical = SmallPadding)
-            )
-        }
-    }
-}
-
-@Composable
-fun CoffeeList(navigator: DestinationsNavigator) {
-    val items = arrayOf(
-        Coffee("Cappuccino", "with Chocolate", 4.8f, R.drawable.ic_coffee2, 4.53f),
-        Coffee("Cappuccino", "with OatMilk", 4.9f, R.drawable.ic_coffee4, 3.90f),
-        Coffee("Cappuccino", "with IceCream", 4.5f, R.drawable.ic_coffee1, 4.66f),
-        Coffee("Cappuccino", "with Milk", 4.6f, R.drawable.ic_coffee3, 3.80f),
-    )
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2), // Set the number of columns in the grid
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        items(items.size) { index ->
-            ItemCoffee(items[index]) {
-                navigator.navigate(DetailScreenDestination(items[index]))
-            }
-        }
-    }
-}
-
-@Composable
-fun ItemCoffee(coffee: Coffee, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(end = NormalPadding, bottom = NormalPadding)
-            .clip(Shape.medium)
-            .clickable { onClick() }
-            .background(color = Color.White)
-    ) {
-        Column {
-            Image(
-                painter = painterResource(id = coffee.coffeeImage),
-                contentDescription = null,
-                modifier = Modifier
-                    .clip(Shape.medium)
-                    .fillMaxWidth(),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = coffee.coffeeName,
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(start = NormalPadding)
-            )
-            Text(
-                text = coffee.extraItem,
-                fontSize = 12.sp,
-                color = Color.Black.copy(0.5f),
-                modifier = Modifier.padding(start = NormalPadding)
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(NormalPadding),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "$ ${coffee.price}",
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Icon(
-                    imageVector = Icons.Default.Add, contentDescription = null,
-                    modifier = Modifier
-                        .clip(Shape.small)
-                        .size(32.dp)
-                        .background(color = Orange800)
-                        .padding(SmallPadding),
-                    tint = Color.White
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .background(
-                    color = Black200.copy(0.6f),
-                    shape = RoundedCornerShape(topStart = 120.dp, bottomEnd = NormalPadding)
-                )
-                .padding(horizontal = SmallPadding, vertical = TinyPadding),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_star),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(14.dp)
-                    .padding(end = TinyPadding),
-                tint = Color.Yellow
-            )
-            Text(
-                text = "${coffee.rating}",
-                fontSize = 12.sp,
-                color = Color.White
-            )
-        }
-    }
-}

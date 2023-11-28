@@ -3,7 +3,6 @@ package com.powersoft.coffeeapp.presentation.order_screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,13 +29,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.powersoft.coffeeapp.R
 import com.powersoft.coffeeapp.domain.model.Coffee
+import com.powersoft.coffeeapp.presentation.order_screen.components.CircleButton
+import com.powersoft.coffeeapp.presentation.order_screen.components.CustomButton
+import com.powersoft.coffeeapp.presentation.order_screen.components.OrderButton
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.MediumPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.NormalPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SemiLargePadding
@@ -269,51 +270,6 @@ fun OrderCounter() {
         CircleButton(onClick = { count++ }, icon = R.drawable.ic_add, isEnabled = true)
     }
 }
-
-@Composable
-fun CircleButton(onClick: () -> Unit, icon: Int, isEnabled: Boolean) {
-    Icon(
-        painter = painterResource(id = icon),
-        contentDescription = null,
-        modifier = Modifier
-            .clip(Shape.large)
-            .clickable { onClick() }
-            .size(30.dp)
-            .border(1.dp, color = Color.LightGray, shape = Shape.large)
-            .padding(SmallPadding),
-        tint = if (isEnabled) Color.Black else Color.LightGray
-    )
-}
-
-@Composable
-fun CustomButton(onClick: () -> Unit, icon: Int, label: String) {
-    Row(
-        modifier = Modifier
-            .padding(end = SmallPadding)
-            .clip(Shape.large)
-            .clickable { onClick() }
-            .background(Color.White)
-            .border(width = 1.dp, color = Color.LightGray.copy(0.7f), shape = Shape.large)
-            .padding(horizontal = NormalPadding, vertical = SmallPadding),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = null,
-            modifier = Modifier
-                .size(18.dp)
-                .padding(end = SmallPadding),
-        )
-
-        Text(
-            text = label,
-            color = Color.Black,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-    }
-}
-
 @Composable
 fun OrderTabs() {
     var orderType by remember { mutableIntStateOf(0) }
@@ -337,22 +293,4 @@ fun OrderTabs() {
             modifier = Modifier.weight(1f)
         )
     }
-}
-
-@Composable
-fun OrderButton(text: String, isSelected: Boolean, onClick: () -> Unit, modifier: Modifier) {
-    val backgroundColor = if (isSelected) Orange800 else Color.Transparent
-
-    Text(
-        text = text,
-        fontSize = 16.sp,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(color = backgroundColor, shape = Shape.medium)
-            .clickable(onClick = onClick)
-            .padding(SmallPadding),
-        color = if (isSelected) Color.White else Color.Black,
-        fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
-        textAlign = TextAlign.Center
-    )
 }

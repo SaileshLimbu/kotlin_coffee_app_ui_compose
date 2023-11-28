@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -35,17 +33,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.powersoft.coffeeapp.R
 import com.powersoft.coffeeapp.domain.model.Coffee
 import com.powersoft.coffeeapp.presentation.destinations.OrderScreenDestination
+import com.powersoft.coffeeapp.presentation.detail_screen.components.IngredientIcon
+import com.powersoft.coffeeapp.presentation.detail_screen.components.SizeButton
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.MediumPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.NormalPadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SemiLargePadding
 import com.powersoft.coffeeapp.presentation.ui.common.Dimens.SmallPadding
+import com.powersoft.coffeeapp.presentation.ui.common.HSpace
 import com.powersoft.coffeeapp.presentation.ui.common.Toolbar
 import com.powersoft.coffeeapp.presentation.ui.common.VSpace
 import com.powersoft.coffeeapp.presentation.ui.theme.Orange500
@@ -135,7 +135,7 @@ fun ContentDetail(coffee: Coffee) {
             contentScale = ContentScale.Crop
         )
 
-        Spacer(modifier = Modifier.height(NormalPadding))
+        VSpace(NormalPadding)
 
         Text(
             text = coffee.coffeeName,
@@ -180,7 +180,7 @@ fun ContentDetail(coffee: Coffee) {
 
             Row {
                 IngredientIcon(icon = R.drawable.ic_bean)
-                Spacer(modifier = Modifier.width(6.dp))
+                HSpace(SmallPadding)
                 IngredientIcon(icon = R.drawable.ic_milk)
             }
         }
@@ -259,28 +259,5 @@ fun SizeSelector() {
     }
 }
 
-@Composable
-fun SizeButton(modifier: Modifier, text: String, textColor: Color) {
-    Text(
-        text,
-        fontSize = 16.sp,
-        modifier = modifier,
-        color = textColor,
-        textAlign = TextAlign.Center
-    )
-}
 
-@Composable
-fun IngredientIcon(icon: Int) {
-    Icon(
-        painter = painterResource(id = icon), contentDescription = null,
-        modifier = Modifier
-            .size(40.dp)
-            .background(
-                color = Color.LightGray.copy(0.2f),
-                shape = Shape.medium
-            )
-            .padding(6.dp),
-        tint = Orange800
-    )
-}
+
